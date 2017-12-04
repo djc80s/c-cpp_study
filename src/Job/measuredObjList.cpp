@@ -127,13 +127,16 @@ void Job::MeasuredObjList::print()
 {
     MeasuredObj *pTemp;
     pTemp = this->m_pHead;
+    std::cout << "基板信息:" << std::endl;
     while (pTemp != nullptr) //遍历所有节点
     {
         std::cout << (*pTemp).name() << std::endl;
-        std::cout << (*pTemp).body().xCoord() << std::endl;
-        std::cout << (*pTemp).body().yCoord() << std::endl;
-        std::cout << (*pTemp).body().height() << std::endl;
-        std::cout << (*pTemp).body().width() << std::endl;
+        std::cout << "  " << "x坐标：" << (*pTemp).body().xCoord() << std::endl;
+        std::cout << "  " <<  "y坐标：" << (*pTemp).body().yCoord() << std::endl;
+        std::cout << "  " <<  "板子高度：" <<  (*pTemp).body().height() << std::endl;
+        std::cout << "  " <<  "板子宽度：" <<  (*pTemp).body().width() << std::endl;
+        std::cout << "  " <<  "角度：" << (*pTemp).body().angle() << std::endl;
+        std::cout << std::endl;
         pTemp = pTemp->pNext();
     }
     std::cout << std::endl;

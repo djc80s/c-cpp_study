@@ -72,11 +72,11 @@ private:
     //member variant
 
     Job::MeasuredObjList m_measuredObjList;
-    std::string m_name{"iphone"};
-    double m_sizeX{20};
-    double m_sizeY{10};
-    double m_originalX{20};
-    double m_originalY{20};
+    std::string m_name{"iPhone"};
+    double m_sizeX{10};
+    double m_sizeY{20};
+    double m_originalX{30};
+    double m_originalY{40};
 
     //<<<----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 

@@ -28,7 +28,7 @@ void CaptureSetting::load(const QString &path)
             //>>>-------------------------------------------------------------------------------------------------------------------------------------
             //step1. 读取图像的宽度,若数据异常则抛出异常
 
-            int width =  configFile.value("ImgWidth").toInt();
+            int width =  configFile.value("Image/Width").toInt();
             if( (width >= 3072) && (width <= 4096) )
             {
                 this->m_imgWidth = width;
@@ -40,21 +40,21 @@ void CaptureSetting::load(const QString &path)
 
             //>>>-------------------------------------------------------------------------------------------------------------------------------------
             //step2. 读取图像的高度，若数据异常则抛出异常
-
             int height =  configFile.value("ImgHeight").toInt();
+            int height =  configFile.value("Image/Height").toInt();
             if( (height >= 3072) && (height <= 4096) )
             {
                 this->m_imgHeight = height;
             }
             else
             {
-                THROW_EXCEPTION("读取ImgHeight失败!");
+                THROW_EXCEPTION("读取Img/Height失败!");
             }
 
             //>>>-------------------------------------------------------------------------------------------------------------------------------------
             //step3. 读取图像位数，若数据异常则抛出异常
 
-            int imgBits =  configFile.value("ImgBits").toInt();
+            int imgBits =  configFile.value("Image/Bit").toInt();
             if( imgBits == 8 )
             {
                 this->m_imgBits = IMGBITS::BIT8;

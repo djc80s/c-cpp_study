@@ -22,8 +22,15 @@ void AppSetting::load(const QString &path)
     QString defaultLaneMode = "Simulator";
     QString defaultMachineType = "SPI";
     QString defaultCompanyName = "SCIJET";
+    QString defaultJobFolderPath = "./Job/";
     QString defaultJobFolderPath = "./Inspection/";
     QSettings configFile(path, QSettings::IniFormat);
+
+    this->m_lang = LANG::CN;
+    this->m_laneMode = LANEMODE::SIMULATOR;
+    this->m_machineType = MACHINETYPE::SPI;
+    this->m_companyName = defaultCompanyName.toStdString();
+    this->m_jobFolderPath = defaultJobFolderPath.toStdString();
 
     //<<<----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -61,6 +68,7 @@ void AppSetting::load(const QString &path)
         {
             std::cout << "读取Theme失败"<<std::endl;
             configFile.setValue("Theme", "Black");
+            this->m_theme = THEME::BLACK;
         }
         else if(theme == "Black")
         {
@@ -79,6 +87,7 @@ void AppSetting::load(const QString &path)
         {
             std::cout << "读取Lang失败"<<std::endl;
             configFile.setValue("Lang", "CN");
+            this->m_lang = LANG::CN;
         }
         else if("CN" == lang)
         {
@@ -90,13 +99,39 @@ void AppSetting::load(const QString &path)
         }
 
         //>>>-------------------------------------------------------------------------------------------------------------------------------------
-        //2.2.3 读取MachineType,如果不正确则写入默认值
+        //2.2.3 读取LaneMode,如果不正确则写入默认值
+
+        QString laneMode = configFile.value("LaneMode").toString();
+        if("Simulator" != laneMode
+                && "DualLane" != laneMode
+                && "SingleLane" != laneMode)
+        {
+            std::cout << "读取LaneMode失败" <<std::endl;
+            configFile.setValue("LaneMode", "Simulator");
+            this->m_laneMode = LANEMODE::SIMULATOR;
+        }
+        else if("Simulator" == laneMode)
+        {
+            this->m_laneMode = LANEMODE::SIMULATOR;
+        }
+        else if("DualLane" == laneMode)
+        {
+            this->m_laneMode = LANEMODE::DUAL_LANE;
+        }
+        else
+        {
+            this->m_laneMode = LANEMODE::SINGLE_LANE;
+        }
+
+        //>>>-------------------------------------------------------------------------------------------------------------------------------------
+        //2.2.4 读取MachineType,如果不正确则写入默认值
 
         QString machineType = configFile.value("MachineType").toString();
         if("SPI" != machineType && "AOI3D" != machineType)
         {
             std::cout << "读取MachineType失败"<<std::endl;
             configFile.setValue("MachineType", "SPI");
+            this->m_machineType = MACHINETYPE::SPI;
         }
         else if("SPI" == machineType)
         {
@@ -108,7 +143,7 @@ void AppSetting::load(const QString &path)
         }
 
         //>>>-------------------------------------------------------------------------------------------------------------------------------------
-        //2.2.4 读取CompanyName,如果不存在则设置为默认值
+        //2.2.5 读取CompanyName,如果不存在则设置为默认值
 
         QString companyName = configFile.value("Company").toString();
         if("\0" != companyName)
@@ -121,7 +156,7 @@ void AppSetting::load(const QString &path)
         }
 
         //>>>-------------------------------------------------------------------------------------------------------------------------------------
-        //2.2.5 读取JobFolderPath,如果路径目录不存在则设置为默认路径
+        //2.2.6 读取JobFolderPath,如果路径目录不存在则设置为默认路径
 
         QString jobFolderPath = configFile.value("JobFolderPath").toString();
         std::fstream file;

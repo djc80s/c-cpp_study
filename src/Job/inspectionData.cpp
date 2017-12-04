@@ -10,7 +10,7 @@ Job::InspectionData::~InspectionData()
 
 }
 
-void Job::InspectionData::writeToXml(const QString& fileName)
+void Job::InspectionData::writeToXml(const QString &fileName)
 {
     //>>>----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     //step1.判断文件名是否存在
@@ -50,7 +50,7 @@ void Job::InspectionData::writeToXml(const QString& fileName)
     //step4.添加根节点及根节点下信息
 
     QDomElement root=xmlDoc.createElement("程式基本信息");
-    root.setAttribute("版本",QString::fromStdString(this->m_lastEditingTime));
+    root.setAttribute("版本",QString::fromStdString(this->m_version));
     root.setAttribute("最后修改时间",QString::fromStdString(this->m_lastEditingTime));
     xmlDoc.appendChild(root);
 
