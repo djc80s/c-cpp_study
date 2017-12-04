@@ -52,7 +52,7 @@ public:
     *  @param NA
     *  @return 第一个节点的地址
     */
-//    MeasuredObj * pullHeadNode();
+    //    MeasuredObj * pullHeadNode();
     void pullHeadNode();
 
     /*
@@ -60,7 +60,7 @@ public:
     *  @param NA
     *  @return 最后一个节点的地址
     */
-//    MeasuredObj * pullTailNode();
+    //    MeasuredObj * pullTailNode();
     void pullTailNode();
 
     /*
