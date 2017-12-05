@@ -40,14 +40,14 @@ public:
     *  @param obj：待插入的节点的指针
     *  @return NA
     */
-    void pushHeadNode(MeasuredObj * ptr);
+    void pushHeadNode(MeasuredObj &ptr);
 
     /*
     *  @brief 在链表尾部插入一个节点
     *  @param obj：待插入的节点的指针
     *  @return NA
     */
-    void pushTailNode(MeasuredObj * ptr);
+    void pushTailNode(MeasuredObj &ptr);
 
     /*
     *  @brief 删除链表的第一个节点
@@ -79,15 +79,27 @@ public:
     */
     void removeAll();
 
+    /*
+    *  @brief  赋值运算符重载
+    *  @param
+    *  @return
+    */
+    inline const MeasuredObjList& operator = (const MeasuredObjList &other)
+    {
+        m_size = other.size();
+        m_pHead = other.headMeasuredObjs();
+        return *this;
+    }
+
     //<<<----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     //>>>----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     //get & set function
 
-    int size() {return this->m_size;}
+    int size() const {return m_size;}
 
-    MeasuredObj * headMeasuredObjs() {return this->m_pHead;}
-    void setHeadMeasuredObj(MeasuredObj * pHead) {this->m_pHead = pHead;}
+    MeasuredObj * headMeasuredObjs() const {return m_pHead;}
+    void setHeadMeasuredObj(MeasuredObj * pHead) {m_pHead = pHead;}
 
     //<<<----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 

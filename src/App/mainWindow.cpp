@@ -24,12 +24,13 @@ void MainWindow::loadAppSetting(const QString & path)
     this->m_appSetting.load(path);
 }
 
-void MainWindow::writeToXml(const QString & path)
+void MainWindow::writeInspectionDataToXml(const string & filename)
 {
-    this->m_inspectionData.writeToXml(path);
+   m_inspectionData.writeToXml(QString::fromStdString(this->m_appSetting.jobFolderPath() +\
+                                                      filename + ".xml"));
 }
 
-void MainWindow::loadJobFolder()
+string MainWindow::loadJobFolder()
 {
     QDir dir(QString::fromStdString(m_appSetting.jobFolderPath()));
 
@@ -54,54 +55,30 @@ void MainWindow::loadJobFolder()
     QFileInfo fileInfo;
     std::string xmlSuffix = ".xml";
 
-    //step3 如果没有程式文件，生成默认程式文件
+    //step3 如果没有程式文件，返回空字符串
     if(list.empty())
     {
-        //step3.1 生成inspectionData数据
-        Job::InspectionData inspectiondate;
-        m_dataGenrator.generateObjInspetionData(MEASURED_OBJ_CNT,inspectiondate);
-
-        //step3.2 写入Job文件
-        m_inspectionJob.saveJob(inspectiondate,m_appSetting.jobFolderPath() + m_defaultJobName);
-
-        //step3.3 写入xml文件
-        inspectiondate.writeToXml( QString::fromStdString(m_appSetting.jobFolderPath() \
-                                                          + m_defaultJobName + xmlSuffix));
-
-        //step3.4 将程式数据输出到屏幕
-        inspectiondate.print();
-
+        return "";
     }
-    //step4 如果目录下有众多程式，输出到屏幕供操作
+    //step4 如果目录下有众多程式，输出到屏幕供选择
     else
     {
         //step4.1 输出程式名到屏幕供选择
         for (int i = 0; i < list.size(); ++i)
         {
             fileInfo = list.at(i);
-            std::cout<< i << " " << list.at(i).fileName().toStdString()<< ":\t" <<std::endl;
+            std::cout<< i << " " << list.at(i).fileName().toStdString() <<std::endl;
         }
-        std::cout << "请输入序号选择程式：" << "\t";
+        std::cout << "请输入序号选择程式：";
         int index = 0;
         while (true)
         {
             //step4.2 读取输入选项
             std::cin >> index;
-            if(index < list.size() && index >= 0) //判断输入是否符合要求
+            if(index < list.size() && index >= 0)          //判断输入是否符合要求
             {
                 fileInfo = list.at(index);
-
-                //step4.3 加载用户选择的程式文件
-                m_inspectionJob.readJob(m_inspectionData,m_appSetting.jobFolderPath() + \
-                                        fileInfo.fileName().toStdString());
-
-                //step4.4 将程式数据导出为xml文件
-                writeToXml( QString::fromStdString(this->m_appSetting.jobFolderPath() +\
-                                                         fileInfo.fileName().toStdString() + xmlSuffix ));
-
-                //step4.5 将程式数据输出到屏幕
-                m_inspectionData.print();
-                break;
+                return fileInfo.fileName().toStdString();  //返回文件名
             }
             else
             {
@@ -111,6 +88,27 @@ void MainWindow::loadJobFolder()
             }
         }
     }
+}
+
+void MainWindow::generatDefaultJob(string JobName)
+{
+    //step1 生成inspectionData数据
+    Job::InspectionData inspectiondate;
+    m_dataGenrator.generateObjInspetionData(MEASURED_OBJ_CNT,inspectiondate);
+
+    //step2 写入Job文件
+    m_inspectionJob.saveJob(inspectiondate,m_appSetting.jobFolderPath() + JobName);
+}
+
+void MainWindow::printToConsle()
+{
+    m_inspectionData.print();
+}
+
+void MainWindow::loadJobToInspectionData(string &filename)
+{
+    m_inspectionJob.readJob(m_inspectionData,m_appSetting.jobFolderPath() + \
+                            filename);
 }
 
 }//End of namespace App

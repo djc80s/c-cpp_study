@@ -8,39 +8,43 @@ Job::MeasuredObjList::MeasuredObjList()
 
 Job::MeasuredObjList::~MeasuredObjList()
 {
-
+    removeAll();
 }
 
-void Job::MeasuredObjList::pushHeadNode(MeasuredObj *ptr)
+void Job::MeasuredObjList::pushHeadNode(MeasuredObj &ptr)
 {
-    MeasuredObj *pOrigPos = this->m_pHead; //保存链表头地址
+    MeasuredObj *pOrigPos = this->m_pHead;      //保存链表头地址
 
-    this->m_pHead = ptr;     //将待插入节点设为首个节点
-    ptr->setPNext(pOrigPos); //链表后一节点设为原来的头节点
+    MeasuredObj *measureObj = new MeasuredObj();//创建存储容器
+    *measureObj = ptr;
 
-    if(pOrigPos != nullptr)  //链表不为空
+    this->m_pHead = measureObj;                 //将待插入节点设为首个节点
+    measureObj->setPNext(pOrigPos);             //链表后一节点设为原来的头节点
+
+    if(pOrigPos != nullptr)                     //链表不为空
     {
-        pOrigPos->setPPre(ptr);
+        pOrigPos->setPPre(measureObj);
     }
 
-    this->m_size ++;         //节点个数增一
+    this->m_size ++;                            //节点个数增一
 }
 
-void Job::MeasuredObjList::pushTailNode(MeasuredObj *ptr)
+void Job::MeasuredObjList::pushTailNode(MeasuredObj &ptr)
 {
     //>>>-------------------------------------------------------------------------------------------------------------------------------------
-    //step1.保存头地址
-
+    //step1.保存头地址并创建数据容器
     MeasuredObj *pOrigPos = this->m_pHead;
+    MeasuredObj *measureObj = new MeasuredObj();//创建存储容器
+    *measureObj = ptr;
 
     //>>>-------------------------------------------------------------------------------------------------------------------------------------
     //step2.判断 如果之前链表为空，直接插入，链表长度增1
 
     if(this->m_pHead == nullptr)
     {
-        this->m_pHead = ptr;
-        ptr->setPNext(nullptr);
-        ptr->setPPre(nullptr);
+        this->m_pHead = measureObj;
+        measureObj->setPNext(nullptr);
+        measureObj->setPPre(nullptr);
         this->m_size ++;      //链表长度加1
         return;
     }
@@ -53,9 +57,9 @@ void Job::MeasuredObjList::pushTailNode(MeasuredObj *ptr)
         this->m_pHead = this->m_pHead->pNext();
     }
 
-    this->m_pHead->setPNext(ptr); //在链表最后一个节点插入目标节点
-    ptr->setPPre(this->m_pHead);
-    ptr->setPNext(nullptr);
+    this->m_pHead->setPNext(measureObj); //在链表最后一个节点插入目标节点
+    measureObj->setPPre(this->m_pHead);
+    measureObj->setPNext(nullptr);
 
     this->m_pHead = pOrigPos; //还原头地址
     this->m_size ++;          //链表长度加1
@@ -76,9 +80,11 @@ void Job::MeasuredObjList::pullHeadNode()
 
     MeasuredObj *pOrigPos = this->m_pHead;
     this->m_pHead = this->m_pHead->pNext();
+
     if(pOrigPos->pNext() != nullptr)
     {
-       pOrigPos->pNext()->setPPre(nullptr);
+        delete pOrigPos->pNext()->pPre();
+        pOrigPos->pNext()->setPPre(nullptr);
     }
 
     //>>>-------------------------------------------------------------------------------------------------------------------------------------
@@ -104,16 +110,16 @@ void Job::MeasuredObjList::pullTailNode()
     pDelete = this->m_pHead;
     while (pDelete->pNext() != nullptr) //找到最后一个节点
     {
-        pDelete = (*pDelete).pNext();
+        pDelete = pDelete->pNext();
     }
     if(pDelete->pPre() != nullptr) //如果链表不是只有一个节点
     {
         pDelete->pPre()->setPNext(nullptr);
-        pDelete->setPPre(nullptr);
-        pDelete->setPNext(nullptr);
+        delete pDelete;
     }
     else //链表只有一个节点
     {
+        delete this->m_pHead;
         this->m_pHead = nullptr;
     }
 
@@ -146,8 +152,10 @@ void Job::MeasuredObjList::removeAll()
     pTemp = m_pHead;
     while (pTemp != nullptr)
     {
+        delete pTemp;
         pTemp = pTemp->pNext();
+        this->m_size--;
     }
-    std::cout << std::endl;
+    m_pHead=nullptr;
 }
 

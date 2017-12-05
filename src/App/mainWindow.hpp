@@ -31,7 +31,7 @@ public:
     //>>>----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     //get and set function
 
-    Job::InspectionData inspectionData() {return this->m_inspectionData;}
+    Job::InspectionData &inspectionData() {return this->m_inspectionData;}
 
     //<<<----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -57,16 +57,36 @@ public:
     *  @param path：xml文件的路径
     *  @return NA
     */
-    void writeToXml(const QString &path);
+    void writeInspectionDataToXml(const std::string &filename);
 
     /*
     *  @brief 加载程式所在文件
-    *         1.如果有程式文件
-    *         2.如果没有程式文件，生成默认程式文件
+    *  @param
+    *  @return string : 1.如果有程式文件,返回程式文件名
+    *                   2.如果没有程式文件,返回空字符串
+    */
+    std::string loadJobFolder();
+
+    /*
+    *  @brief 生成默认程式
     *  @param
     *  @return
     */
-    void loadJobFolder();
+    void generatDefaultJob(std::string JobName);
+
+    /*
+    *  @brief  将加载的程式输出到终端
+    *  @param
+    *  @return
+    */
+    void printToConsle();
+
+    /*
+    *  @brief  加载Appsetting目录下的指定检测程式
+    *  @param  filename: 程式的名称
+    *  @return
+    */
+    void loadJobToInspectionData(std::string &filename);
 
     //<<<----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -75,12 +95,11 @@ private:
 
     AppSetting m_appSetting;
     CaptureSetting m_captureSetting;
+
     InspectionJob m_inspectionJob;
     DataGenerator m_dataGenrator;
 
     Job::InspectionData m_inspectionData;
-
-    std::string m_defaultJobName{"HUAWEI_CA1204_RED"};
 };
 }
 

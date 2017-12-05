@@ -75,9 +75,6 @@ public:
 
 private:
     std::string m_defaultBoardName {"COMUNICATION_CARD172506"};
-
-    Job::Board m_board;
-    Job::MeasuredObjList m_objList;
     Job::MeasuredObj *m_pmeasuredObj{nullptr};
 };
 }

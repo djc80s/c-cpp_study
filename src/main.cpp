@@ -1,19 +1,14 @@
 #include <iostream>
 
-#include <QDir>
-
 #include "SDK/customException.hpp"
-
-#include "App/appSetting.hpp"
-#include "App/captureSetting.hpp"
 #include "App/mainWindow.hpp"
-
-#define MEASURED_OBJ_CNT 50 //测量对象数量
 
 using namespace std;
 
 int main()
 {
+    string selectedJobName;
+    string defaultJobname = "ZTE_CA1524_Black";
     try
     {
         App::MainWindow mainWindow;
@@ -22,8 +17,24 @@ int main()
         mainWindow.loadAppSetting("./AppConfig/AppSetting.ini");
         mainWindow.loadCaptureSetting("./HardwareConfig/CaptureSetting.ini");
 
-        //展示操作目录下的程式
-        mainWindow.loadJobFolder();
+        //尝试加载程式目录
+        selectedJobName = mainWindow.loadJobFolder();
+
+        if( "" == selectedJobName )
+        {
+            mainWindow.generatDefaultJob(defaultJobname);
+            //再次加载程式文件选择界面
+            selectedJobName = mainWindow.loadJobFolder();
+        }
+
+        //加载选中的程式
+        mainWindow.loadJobToInspectionData(selectedJobName);
+
+        //写出将InspectionData写出为xml文件
+        mainWindow.writeInspectionDataToXml(selectedJobName);
+
+        //将InspectionData输出到界面显示
+        mainWindow.printToConsle();
     }
     catch(const SDK::CustomException& ex)
     {

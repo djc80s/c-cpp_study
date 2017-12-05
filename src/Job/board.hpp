@@ -32,24 +32,22 @@ public:
 
     //>>>----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     //get & set function
+    Job::MeasuredObjList &measuredObjList() {return this->m_measuredObjList;}
+    void setMeasuredObjList(Job::MeasuredObjList &measureObj) {this->m_measuredObjList = measureObj;}
 
-    Job::MeasuredObjList measuredObjList() {return this->m_measuredObjList;}
-    void setMeasuredObjList(Job::MeasuredObjList measuredObjList)
-    {this->m_measuredObjList = measuredObjList;}
-
-    std::string name() {return this->m_name;}
+    std::string name() const {return this->m_name;}
     void setName(std::string name) {this->m_name = name;}
 
-    double sizeX() {return this->m_sizeX;}
+    double sizeX() const {return this->m_sizeX;}
     void setSizeX(double sizeX) {this->m_sizeX = sizeX;}
 
-    double sizeY() {return this->m_sizeY;}
+    double sizeY() const {return this->m_sizeY;}
     void setSizeY(double sizeY) {this->m_sizeY = sizeY;}
 
-    double originalX() {return this->m_originalX;}
+    double originalX() const {return this->m_originalX;}
     void setOriginalX(double originalX) {this->m_originalX = originalX;}
 
-    double originalY() {return this->m_originalY;}
+    double originalY() const {return this->m_originalY;}
     void setOriginalY(double originalY) {this->m_originalY = originalY;}
 
     //<<<----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -71,13 +69,23 @@ public:
     */
     void print();
 
+    inline const Board& operator = (const Board &other)
+    {
+        m_name = other.name();
+        m_sizeX = other.sizeX();
+        m_sizeY = other.sizeY();
+        m_originalX = other.originalX();
+        m_originalY = other.originalY();
+        m_measuredObjList = other.m_measuredObjList;
+        return *this;
+    }
+
     //<<<----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 private:
 
     //>>>----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     //member variant
-
     Job::MeasuredObjList m_measuredObjList;
     std::string m_name{"iPhone"};
     double m_sizeX{10};

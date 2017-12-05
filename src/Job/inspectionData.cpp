@@ -49,12 +49,12 @@ void Job::InspectionData::writeToXml(const QString &fileName)
     //>>>----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     //step4.添加根节点及根节点下信息
 
-    QDomElement root=xmlDoc.createElement("程式基本信息");
+    QDomElement root=xmlDoc.createElement("程式信息");
     root.setAttribute("版本",QString::fromStdString(this->m_version));
     root.setAttribute("最后修改时间",QString::fromStdString(this->m_lastEditingTime));
     xmlDoc.appendChild(root);
 
-    this->m_board.writeToXml(xmlDoc); //调用函数写入board数据
+    this->board().writeToXml(xmlDoc); //调用函数写入board数据
 
     //<<<----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -71,5 +71,5 @@ void Job::InspectionData::print()
 {
     std::cout << "程式信息\n" << "版本:"<< m_version << "\t" <<\
                  "最后修改时间:"<< m_lastEditingTime << std::endl;
-    m_board.print();
+    board().print();
 }

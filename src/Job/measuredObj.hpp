@@ -30,10 +30,10 @@ public:
     //>>>----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     //get/set function
 
-    std::string name() const {return m_name;}
+    std::string &name() {return m_name;}
     void setName(std::string name) {m_name = name;}
 
-    SDK::Rectangle body() const {return m_body;}
+    SDK::Rectangle &body() {return m_body;}
     void setBody(SDK::Rectangle body) {m_body = body;}
 
     MeasuredObj * pPre() const {return m_pPre;}
@@ -42,9 +42,9 @@ public:
     MeasuredObj * pNext() const {return m_pNext;}
     void setPNext(MeasuredObj *pNext){m_pNext = pNext;}
 
-    inline const MeasuredObj& operator = (const MeasuredObj &other)
+    inline const MeasuredObj& operator = (MeasuredObj &other)
     {
-        m_name = other.m_name;
+        m_name.assign(other.m_name);
         m_body = other.body();
         return *this;
     }
@@ -56,7 +56,7 @@ private:
     //>>>----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     //member variant
 
-    std::string m_name{'\0'};//测量对象的名字
+    std::string m_name{""};//测量对象的名字
     SDK::Rectangle m_body;   //测量对象的所在矩形框
     MeasuredObj * m_pPre{nullptr};//指向前一个测量对象的指针
     MeasuredObj * m_pNext{nullptr};//指向后一个测量对象的指针

@@ -47,14 +47,13 @@ public:
 
     //>>>----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     //get & set function
-
-    Job::Board board() {return this->m_board;}
+    Job::Board &board() {return this->m_board;}
     void setBoard(Job::Board board) {this->m_board = board;}
 
-    std::string version() {return this->m_version;}
+    std::string &version() {return this->m_version;}
     void setVersion(std::string version) {this->m_version = version;}
 
-    std::string lastEditingTime() {return this->m_lastEditingTime;}
+    std::string &lastEditingTime() {return this->m_lastEditingTime;}
     void setLastEditingTime(std::string lastEditingTime)
     {this->m_lastEditingTime = lastEditingTime;}
 
@@ -64,10 +63,9 @@ private:
 
     //>>>----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     //member variant
-
-    Job::Board m_board;
     std::string m_version{"V1"};
     std::string m_lastEditingTime{"2017年 12月 03日 星期日 21:12:32 CST"};
+    Job::Board m_board;
 
     //<<<----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 };

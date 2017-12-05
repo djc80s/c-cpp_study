@@ -87,7 +87,7 @@ void App::InspectionJob::readJob(Job::InspectionData &inspectionData, std::strin
     SSDK::DB::SqliteDB sqlite;
     try
     {
-        if(!sqlite.open(path))
+        if(sqlite.open(path))
         {
             //>>>----------------------------------------------------------------------------------------------------------
             //1.读取版本号
@@ -130,6 +130,7 @@ void App::InspectionJob::readJob(Job::InspectionData &inspectionData, std::strin
             sqlite.begin();
 
             Job::MeasuredObj measuredObj;
+            inspectionData.board().measuredObjList().removeAll(); //清除链表中所有数据
             while(true)
             {
                 sqlite.step();
@@ -144,7 +145,7 @@ void App::InspectionJob::readJob(Job::InspectionData &inspectionData, std::strin
                 measuredObj.body().setWidth(boost::get<double>(sqlite.columnValue(2)));
                 measuredObj.body().setXCoord(boost::get<double>(sqlite.columnValue(3)));
                 measuredObj.body().setYCoord(boost::get<double>(sqlite.columnValue(4)));
-                inspectionData.board().measuredObjList().pushHeadNode(&measuredObj);
+                inspectionData.board().measuredObjList().pushTailNode(measuredObj);
             }
             sqlite.reset();
             sqlite.close();
