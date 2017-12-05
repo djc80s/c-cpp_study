@@ -78,7 +78,7 @@ private:
     LANEMODE m_laneMode{LANEMODE::SIMULATOR};
     MACHINETYPE m_machineType{MACHINETYPE::SPI};
     std::string m_companyName{"SCIJET"};
-    std::string m_jobFolderPath{"./Inspection/"};
+    std::string m_jobFolderPath{"./Job/"};
 
     //<<<----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 

@@ -17,7 +17,8 @@ SOURCES += main.cpp \
     App/mainWindow.cpp \
     DB/blob.cpp \
     DB/sqlitedb.cpp \
-    DB/sqlitedbtest.cpp
+    DB/sqlitedbtest.cpp \
+    App/inspectionjob.cpp
 
 SUBDIRS += \
     3DAOI_grace.pro
@@ -35,7 +36,8 @@ HEADERS += \
     App/mainWindow.hpp \
     DB/blob.hpp \
     DB/sqlitedb.hpp \
-    DB/sqlitedbtest.hpp
+    DB/sqlitedbtest.hpp \
+    App/inspectionjob.h
 
 INCLUDEPATH += $$PWD/../include/sqlite
 INCLUDEPATH += $$PWD/../include

@@ -1,9 +1,7 @@
 #ifndef INSPECTIONDATA_HPP
 #define INSPECTIONDATA_HPP
 
-#include "App/dataGenerator.hpp"
-#include "measuredObjList.hpp"
-
+#include "Job/measuredObjList.hpp"
 #include "Job/board.hpp"
 
 namespace Job
@@ -30,7 +28,20 @@ public:
     //>>>----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     //operate function
 
-    void writeToXml(const QString& fileName);
+    /*
+    *  @brief  将内存中的inspectionData数据结构写入到Xml文件中
+    *  @param  fileName：待写入的文件名
+    *  @return
+    */
+    void writeToXml(const QString & fileName);
+
+
+    /*
+    *  @brief 将内存中的inspectionData打印到终端
+    *  @param
+    *  @return
+    */
+    void print();
 
     //<<<----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -55,8 +66,8 @@ private:
     //member variant
 
     Job::Board m_board;
-    std::string m_version;
-    std::string m_lastEditingTime;
+    std::string m_version{"V1"};
+    std::string m_lastEditingTime{"2017年 12月 03日 星期日 21:12:32 CST"};
 
     //<<<----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 };

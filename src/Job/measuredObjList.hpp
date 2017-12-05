@@ -13,6 +13,8 @@ namespace Job
  *         3.在链表头部删除一个节点
  *         4.在链表尾部删除一个节点
  *         5.打印链表所有内容
+ *         6.重置链表内所有数据
+ *         7.删除链表内选定节点数据（TBI）
  *  @author grace
  *  @version 1.00 2017-11-27 grace
  *                note:create it
@@ -52,7 +54,7 @@ public:
     *  @param NA
     *  @return 第一个节点的地址
     */
-//    MeasuredObj * pullHeadNode();
+    //    MeasuredObj * pullHeadNode();
     void pullHeadNode();
 
     /*
@@ -60,7 +62,7 @@ public:
     *  @param NA
     *  @return 最后一个节点的地址
     */
-//    MeasuredObj * pullTailNode();
+    //    MeasuredObj * pullTailNode();
     void pullTailNode();
 
     /*
@@ -69,6 +71,13 @@ public:
     *  @return NA
     */
     void print();
+
+    /*
+    *  @brief  清除List中的所有数据
+    *  @param  NA
+    *  @return NA
+    */
+    void removeAll();
 
     //<<<----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
