@@ -7,11 +7,9 @@
 #include <QFile>
 #include <QDir>
 
-#include "DB/sqlitedb.hpp"
-
 #include "App/appSetting.hpp"
 #include "App/captureSetting.hpp"
-#include "Job/inspectionData.hpp"
+#include "App/inspectionjob.h"
 #include "App/dataGenerator.hpp"
 
 #define MEASURED_OBJ_CNT 50 //测量对象数量
@@ -62,20 +60,6 @@ public:
     void writeToXml(const QString &path);
 
     /*
-    *  @brief 创建程式到数据库
-    *  @param path：写程式所在路径
-    *  @return NA
-    */
-    void createJob(std::string path);
-
-    /*
-    *  @brief 读程式
-    *  @param path:读的程式所在路径
-    *  @return
-    */
-    void readJob(std::string path);
-
-    /*
     *  @brief 加载程式所在文件
     *         1.如果有程式文件
     *         2.如果没有程式文件，生成默认程式文件
@@ -91,8 +75,12 @@ private:
 
     AppSetting m_appSetting;
     CaptureSetting m_captureSetting;
+    InspectionJob m_inspectionJob;
+    DataGenerator m_dataGenrator;
+
     Job::InspectionData m_inspectionData;
 
+    std::string m_defaultJobName{"HUAWEI_CA1204_RED"};
 };
 }
 

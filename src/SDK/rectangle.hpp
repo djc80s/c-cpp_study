@@ -30,21 +30,30 @@ public:
     //>>>----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     //get & set function
 
-    double xCoord() {return this->m_xCoord;}
-    void setXCoord(double xCoord) {this->m_xCoord = xCoord;}
+    double xCoord() const {return m_xCoord;}
+    void setXCoord(double xCoord) {m_xCoord = xCoord;}
 
-    double yCoord() {return this->m_yCoord;}
-    void setYCoord(double yCoord) {this->m_yCoord = yCoord;}
+    double yCoord() const {return m_yCoord;}
+    void setYCoord(double yCoord) {m_yCoord = yCoord;}
 
-    double angle() {return this->m_angle;}
-    void setAngle(double angle) {this->m_angle = angle;}
+    double angle() const {return m_angle;}
+    void setAngle(double angle) {m_angle = angle;}
 
-    double width() {return this->m_width;}
-    void setWidth(double width) {this->m_width = width;}
+    double width() const {return m_width;}
+    void setWidth(double width) {m_width = width;}
 
-    double height() {return this->m_height;}
-    void setHeight(double height) {this->m_height = height;}
+    double height() const {return m_height;}
+    void setHeight(double height) {m_height = height;}
 
+    inline const Rectangle& operator = (const Rectangle &other)
+    {
+        m_xCoord = other.xCoord();
+        m_yCoord = other.yCoord();
+        m_angle = other.angle();
+        m_width = other.width();
+        m_height = other.height();
+        return *this;
+    }
     //<<<----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 private:

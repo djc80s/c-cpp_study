@@ -48,7 +48,7 @@ void Job::Board::writeToXml( QDomDocument& qXmlDoc)
     QDomElement object;
 
     //3.3 存入所有元件的数据
-    for ( int i = 1; i <= this->m_measuredObjList.size(); ++i)
+    for ( int i = 0; i < this->m_measuredObjList.size(); ++i)
     {
         //3.3.1 存入一个元件的数据：
         object = qXmlDoc.createElement(QString::fromStdString(pListHead->name()));
@@ -63,4 +63,11 @@ void Job::Board::writeToXml( QDomDocument& qXmlDoc)
     root.appendChild(node); //添加node到根节点
 
     //<<<----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+}
+
+void Job::Board::print()
+{
+    std::cout << "基板信息\n" << "板宽:"<< m_sizeX << "\t" <<"板长:"<< m_sizeY << "\t"<<\
+                 "X原点:"<< m_originalX << "\t"<<"Y原点:"<< m_originalY << std::endl;
+    m_measuredObjList.print();
 }

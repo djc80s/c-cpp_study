@@ -23,7 +23,6 @@ void AppSetting::load(const QString &path)
     QString defaultMachineType = "SPI";
     QString defaultCompanyName = "SCIJET";
     QString defaultJobFolderPath = "./Job/";
-    QString defaultJobFolderPath = "./Inspection/";
     QSettings configFile(path, QSettings::IniFormat);
 
     this->m_lang = LANG::CN;

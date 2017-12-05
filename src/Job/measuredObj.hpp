@@ -28,19 +28,26 @@ public:
     //<<<----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     //>>>----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-    //operate function
+    //get/set function
 
-    std::string name() {return this->m_name;}
-    void setName(std::string name) {this->m_name = name;}
+    std::string name() const {return m_name;}
+    void setName(std::string name) {m_name = name;}
 
-    SDK::Rectangle body() {return this->m_body;}
-    void setBody(SDK::Rectangle body) {this->m_body = body;}
+    SDK::Rectangle body() const {return m_body;}
+    void setBody(SDK::Rectangle body) {m_body = body;}
 
-    MeasuredObj * pPre() {return this->m_pPre;}
-    void setPPre(MeasuredObj *pPre){this->m_pPre = pPre;}
+    MeasuredObj * pPre() const {return m_pPre;}
+    void setPPre(MeasuredObj *pPre){m_pPre = pPre;}
 
-    MeasuredObj * pNext() {return this->m_pNext;}
-    void setPNext(MeasuredObj *pNext){this->m_pNext = pNext;}
+    MeasuredObj * pNext() const {return m_pNext;}
+    void setPNext(MeasuredObj *pNext){m_pNext = pNext;}
+
+    inline const MeasuredObj& operator = (const MeasuredObj &other)
+    {
+        m_name = other.m_name;
+        m_body = other.body();
+        return *this;
+    }
 
     //<<<----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 

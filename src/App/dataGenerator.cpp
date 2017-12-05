@@ -7,7 +7,10 @@ App::DataGenerator::DataGenerator()
 
 App::DataGenerator::~DataGenerator()
 {
-
+    if(nullptr != m_pmeasuredObj)
+    {
+        delete []m_pmeasuredObj;
+    }
 }
 
 void App::DataGenerator::generateRectRandomly(Job::MeasuredObj & obj)
@@ -55,7 +58,6 @@ void App::DataGenerator::generateObjsRandomly(int size, Job::MeasuredObj measure
     for (int i = 0; i < size; ++i)
     {
         char name[FILE_NAME_LEN];
-
         //>>>-------------------------------------------------------------------------------------------------------------------------------------
         //1.1 生成每个测量对象的名字
 
@@ -74,16 +76,53 @@ void App::DataGenerator::generateObjsRandomly(int size, Job::MeasuredObj measure
         measuredObj[i].setName(name);
         generateRectRandomly(measuredObj[i]);
     }
-
     //<<<----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 }
 
-//void App::DataGenerator::generateBoard(Job::Board & board)
-//{
-//    std::string defaultBoardName = "HUAWEI";
-//    board.setMeasuredObjList(defaultBoardName);
-//    board.setSizeX(50);
-//    board.setSizeY(50);
-//    board.setOriginalX(10);
-//    board.setOriginalY(10);
-//}
+void App::DataGenerator::generateBoard(std::string boardName, Job::Board & board)
+{
+    board.setName(boardName);
+    board.setSizeX(50);
+    board.setSizeY(50);
+    board.setOriginalX(10);
+    board.setOriginalY(10);
+}
+
+void App::DataGenerator::generateObjInspetionData(int measured_size, Job::InspectionData &inspectionData)
+{
+    //>>>----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    //step1 数据变量声明
+    if(nullptr != m_pmeasuredObj)
+    {
+        delete []m_pmeasuredObj;
+    }
+    m_pmeasuredObj = new Job::MeasuredObj[measured_size];
+
+    //<<<----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+    //>>>----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    //step2 生成并更新InspectionData数据
+
+    //>>>-------------------------------------------------------------------------------------------------------------------------------------
+    //step2.1 生成measureObj数据
+    generateObjsRandomly(measured_size,m_pmeasuredObj);
+
+    for (int i = 0; i < measured_size; ++i)
+    {
+        m_objList.pushTailNode(&m_pmeasuredObj[i]);
+    }
+
+    //>>>-------------------------------------------------------------------------------------------------------------------------------------
+    //step2.2 生成并更新Board数据
+    generateBoard(m_defaultBoardName,m_board);
+    m_board.setMeasuredObjList(m_objList);
+
+    //<<<----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+    //>>>----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    //step3 更新inspectionData
+    inspectionData.setBoard(m_board);
+
+    //<<<----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+}

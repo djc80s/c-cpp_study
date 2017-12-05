@@ -2,10 +2,12 @@
 #define GENERATIONDATA_HPP
 
 #include "Job/measuredObj.hpp"
+#include "Job/measuredObjList.hpp"
 #include "Job/board.hpp"
+#include "Job/inspectionData.hpp"
 
 #define FILE_NAME_LEN 20 //文件名长度
-#define IC_CNT 20        //文件名前缀为 ic 的数量
+#define IC_CNT        30 //ic 的数量
 #define RANDOM_NUM(MAX,MIN) (float)(rand()%((int)(MAX-MIN)*100)+MIN*100)/100 //随机生成大小在MAX和MIN之间的浮点型数据
 
 namespace App
@@ -45,7 +47,7 @@ public:
     *  @param obj：把obj内的成员变量用生成的矩形赋值
     *  @return NA
     */
-    void generateRectRandomly(Job::MeasuredObj & obj);
+    void generateRectRandomly(Job::MeasuredObj &obj);
 
     /*
     *  @brief 随机生成测量目标
@@ -55,8 +57,28 @@ public:
     */
     void generateObjsRandomly(int size, Job::MeasuredObj measuredObj[]);
 
+    /*
+    *  @brief 生成默认的检测数据
+    *  @param inspectionData： 使用指针方式传入一个inspectionData实例
+    *  @return
+    */
+    void generateObjInspetionData(int measured_size, Job::InspectionData &inspectionData);
+
+    /*
+    *  @brief 生成默认的Board数据
+    *  @param boardName：Board的名字
+    *         board：存储Board信息的数据实例
+    *  @return
+    */
+    void generateBoard(std::string boardName, Job::Board & board);
     //<<<----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+private:
+    std::string m_defaultBoardName {"COMUNICATION_CARD172506"};
+
+    Job::Board m_board;
+    Job::MeasuredObjList m_objList;
+    Job::MeasuredObj *m_pmeasuredObj{nullptr};
 };
 }
 

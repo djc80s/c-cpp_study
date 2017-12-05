@@ -8,7 +8,7 @@ Job::MeasuredObjList::MeasuredObjList()
 
 Job::MeasuredObjList::~MeasuredObjList()
 {
-    this->m_pHead = nullptr;
+
 }
 
 void Job::MeasuredObjList::pushHeadNode(MeasuredObj *ptr)
@@ -127,16 +127,25 @@ void Job::MeasuredObjList::print()
 {
     MeasuredObj *pTemp;
     pTemp = this->m_pHead;
-    std::cout << "基板信息:" << std::endl;
+    std::cout << "器件信息\t" << std::endl;
     while (pTemp != nullptr) //遍历所有节点
     {
-        std::cout << (*pTemp).name() << std::endl;
-        std::cout << "  " << "x坐标：" << (*pTemp).body().xCoord() << std::endl;
-        std::cout << "  " <<  "y坐标：" << (*pTemp).body().yCoord() << std::endl;
-        std::cout << "  " <<  "板子高度：" <<  (*pTemp).body().height() << std::endl;
-        std::cout << "  " <<  "板子宽度：" <<  (*pTemp).body().width() << std::endl;
-        std::cout << "  " <<  "角度：" << (*pTemp).body().angle() << std::endl;
-        std::cout << std::endl;
+        std::cout << (*pTemp).name() << "->" << "x坐标：" << (*pTemp).body().xCoord()<<\
+                     "\t" <<  "y坐标：" << (*pTemp).body().yCoord() <<\
+                     "\t" <<  "板子高度：" <<  (*pTemp).body().height() <<\
+                     "\t" <<  "板子宽度：" <<  (*pTemp).body().width() <<\
+                     "\t" <<  "角度：" << (*pTemp).body().angle() << std::endl;
+        pTemp = pTemp->pNext();
+    }
+    std::cout << std::endl;
+}
+
+void Job::MeasuredObjList::removeAll()
+{
+    MeasuredObj *pTemp;
+    pTemp = m_pHead;
+    while (pTemp != nullptr)
+    {
         pTemp = pTemp->pNext();
     }
     std::cout << std::endl;
